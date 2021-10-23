@@ -1,0 +1,43 @@
+{% extends './body.html' %}
+
+{% block title %} Listado de libros {% endblock %}
+
+
+{% block container %}
+
+<div class="container py-3">
+
+    <section class="row">
+        <article class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <h1>{{data.titulo}}</h1>
+        </article>
+    </section>
+    <hr>
+    <section class="row">
+        {% for libro in data.libros %}
+        <article class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="card mb-4">
+                {% set url = 'img/portadas/' + libro.isbn + '.jpg' %}
+                <img src="{{ url_for('static', filename=url) }}" ) height="320px" class="card-img-top"
+                    alt="{{ libro.titulo }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ libro.titulo }}</h5>
+                    <p class="card-text">
+                        {{ libro.autor.nombre_completo() }}
+                    </p>
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-primary btnComprar" id="{{ libro.isbn }}">Comprar <span style="float:right">$ {{ libro.precio }}</span></button>
+                    </div>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    </section>
+</div>
+{% endblock %}
+
+{% block custom_js %} 
+<script src="{{ url_for('static', filename='js/notificacion.js') }}"> </script> 
+<script src="{{ url_for('static', filename='js/listado_libros.js') }}"> </script> 
+{% endblock %}

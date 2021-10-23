@@ -1,0 +1,54 @@
+{% extends './base.html' %}
+
+
+{% block title %} Login {% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<main class="form-signin">
+    <form action="/login" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <img class="mb-4" src="{{ url_for('static', filename='img/flask.svg') }}" alt="" width="72" height="57">
+        <h1 class="h3 mb-3 fw-normal">Inicio de sesión</h1>
+
+        <div class="form-floating">
+            <input type="text" name="username" class="form-control" id="username" placeholder="Nombre de usuario"
+                minlength="5" autofocus required>
+            <label for="username">Usuario</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="floatingPassword" minlength="5"
+                placeholder="Password" required>
+            <label for="floatingPassword">Contraseña</label>
+        </div>
+        {% with errors = get_flashed_messages(category_filter=['error']) %}
+        {% if errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {%- for msg in errors %}
+            <span>{{ msg }}</span>
+            {% endfor -%}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" title="Cierra alerta"></button>
+        </div>
+        {% endif %}
+        {% endwith %}
+        
+        {% with success = get_flashed_messages(category_filter=['success']) %}
+        {% if success %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {%- for msg in success %}
+            <span>{{ msg }}</span>
+            {% endfor -%}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" title="Cierra alerta"></button>
+        </div>
+        {% endif %}
+        {% endwith %}
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Inicia sesión</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
+    </form>
+</main>
+
+{% endblock %}

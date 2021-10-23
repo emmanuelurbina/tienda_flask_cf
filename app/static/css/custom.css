@@ -1,0 +1,10 @@
+.app_nav_text {
+    text-transform: capitalize;
+    color: #fff !important;
+    font-weight: bolder;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+}
